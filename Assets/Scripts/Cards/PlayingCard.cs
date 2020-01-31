@@ -8,12 +8,14 @@ public class PlayingCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     public CardRank Rank { get; private set; }
     public CardSuit Suit { get; private set; }
 
-    public CardAnchor currentAnchor; // TODO
+    private CardAnchor currentAnchor;
 
     private Transform DeckTransform;
 
     private Vector3 mouseDragOffset;
     private List<CardAnchor> hoveredAnchors;
+
+    private bool CanBeDragged => transform.GetSiblingIndex() == transform.parent.childCount - 1;
 
     public void InitializeCardValue(CardRank Rank, CardSuit Suit, Transform DeckTransform)
     {
@@ -36,7 +38,7 @@ public class PlayingCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
             cardColor = Color.red;
         }
 
-        string cardContent = Rank.ToString() + "\n" + Suit.ToString();
+        string cardContent = Rank.ToUIString() + "\n" + Suit.ToString();
 
         foreach (Text textElement in transform.GetComponentsInChildren<Text>())
         {
@@ -47,6 +49,11 @@ public class PlayingCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        if (!CanBeDragged)
+        {
+            return;
+        }
+
         mouseDragOffset = transform.position - Input.mousePosition;
 
         // detach from current anchor
@@ -55,6 +62,11 @@ public class PlayingCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 
     public void OnDrag(PointerEventData eventData)
     {
+        if (!CanBeDragged)
+        {
+            return;
+        }
+
         transform.position = Input.mousePosition + mouseDragOffset;
 
         // highlight just the closest hovered card anchor
@@ -74,6 +86,17 @@ public class PlayingCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        if (!CanBeDragged)
+        {
+            return;
+        }
+
+        // unhover all anchors
+        foreach (CardAnchor anchor in hoveredAnchors)
+        {
+            anchor.OnCardDragUnhover();
+        }
+
         // attach to hovered anchor if it can accept this card
         CardAnchor anchorToDropOn = ClosestHoveredAnchor();
         if (anchorToDropOn != null && anchorToDropOn.CanAttachCard(this))
@@ -85,23 +108,18 @@ public class PlayingCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         }
         MoveToAnchor();
 
-        // unhover all anchors
-        foreach (CardAnchor anchor in hoveredAnchors)
-        {
-            anchor.OnCardDragUnhover();
-        }
         hoveredAnchors.Clear();
     }
 
     public void AttachToAnchor(CardAnchor anchor)
     {
-        anchor.OnAttachCard(this);
         currentAnchor = anchor;
+        anchor.OnAttachCard(this);
     }
 
     public void MoveToAnchor()
     {
-        transform.position = currentAnchor.GetAttachmentPosition();
+        transform.position = currentAnchor.GetAttachmentPosition(this);
     }
 
     private void OnTriggerEnter2D(Collider2D collider)

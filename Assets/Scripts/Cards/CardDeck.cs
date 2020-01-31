@@ -8,12 +8,15 @@ using System.Collections;
 public class CardDeck : MonoBehaviour
 {
     [SerializeField] private GameObject CardPrefab = default;
-    public CardAnchor[] ColumnAnchors = default;
+
+    private CardAnchor[] ColumnAnchors;
 
     List<PlayingCard> Cards;
 
     private void Start()
     {
+        Assert.IsNotNull(CardPrefab);
+
         ColumnAnchors = FindObjectsOfType<ColumnAnchor>()
             .OrderBy(col => col.transform.GetSiblingIndex())
             .ToArray();
@@ -24,7 +27,7 @@ public class CardDeck : MonoBehaviour
         StartCoroutine(Deal());
     }
 
-    public void GenerateDeck()
+    private void GenerateDeck()
     {
         Cards = new List<PlayingCard>();
         foreach (CardRank rank in Enum.GetValues(typeof(CardRank)))
@@ -40,7 +43,7 @@ public class CardDeck : MonoBehaviour
         Assert.AreEqual(Cards.Count, 52);
     }
 
-    public void ShuffleDeck()
+    private void ShuffleDeck()
     {
         System.Random random = new System.Random();
         int n = Cards.Count;

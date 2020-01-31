@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class FoundationAnchor : CardAnchor
 {
-    [SerializeField] private CardSuit Suit;
+    [SerializeField] private CardSuit Suit = CardSuit.CLUB;
 
     public override void OnStart()
     {

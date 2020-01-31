@@ -7,7 +7,6 @@ public abstract class CardAnchor : MonoBehaviour
 {
     [SerializeField] protected Color HoverColor = Color.blue;
 
-    //protected List<PlayingCard> HeldCards = new List<PlayingCard>();
     protected Transform HeldCardsTransform;
 
     protected Color UnhoverColor;
@@ -58,7 +57,7 @@ public abstract class CardAnchor : MonoBehaviour
         }
     }
 
-    public virtual Vector3 GetAttachmentPosition()
+    public virtual Vector3 GetAttachmentPosition(PlayingCard card)
     {
         return transform.position;
     }

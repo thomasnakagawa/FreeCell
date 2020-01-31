@@ -5,7 +5,9 @@ using UnityEngine.UI;
 
 public class ColumnAnchor : CardAnchor
 {
-    [SerializeField] private float CardStackingOffset = 30f;
+    [SerializeField] private float CardStackingOffset = 0.05f;
+
+    private float UnitOffset => (CardStackingOffset * Screen.height);
 
     public override bool CanAttachCard(PlayingCard card)
     {
@@ -20,6 +22,15 @@ public class ColumnAnchor : CardAnchor
         bool topCardIsOneRankHigher = (int)card.Rank == (int)topCard.Rank - 1;
 
         return cardsAreDifferentColors && topCardIsOneRankHigher;
+    }
+
+    public override void OnAttachCard(PlayingCard card)
+    {
+        base.OnAttachCard(card);
+        foreach (Transform childCard in HeldCardsTransform)
+        {
+            childCard.GetComponent<PlayingCard>().MoveToAnchor();
+        }
     }
 
     public override void OnCardDragHover()
@@ -42,8 +53,9 @@ public class ColumnAnchor : CardAnchor
         imageToColor.color = Color.white;
     }
     
-    public override Vector3 GetAttachmentPosition()
+    public override Vector3 GetAttachmentPosition(PlayingCard card)
     {
-        return transform.position + (Vector3.down * CardStackingOffset * (NumberOfHeldCards - 1));
+        int cardNumber = card.transform.GetSiblingIndex();
+        return transform.position + (Vector3.down * UnitOffset * cardNumber);
     }
 }
