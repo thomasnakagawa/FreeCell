@@ -8,15 +8,20 @@ public class PlayingCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     public CardRank Rank { get; private set; }
     public CardSuit Suit { get; private set; }
 
-    private CardAnchor currentAnchor;
+    public CardAnchor currentAnchor; // TODO
+
+    private Transform DeckTransform;
 
     private Vector3 mouseDragOffset;
     private List<CardAnchor> hoveredAnchors;
 
-    public void InitializeCardValue(CardRank Rank, CardSuit Suit)
+    public void InitializeCardValue(CardRank Rank, CardSuit Suit, Transform DeckTransform)
     {
         this.Rank = Rank;
         this.Suit = Suit;
+        this.DeckTransform = DeckTransform;
+
+        name = "Card_" + Rank + "_" + Suit;
 
         SetCardUI();
 
@@ -43,6 +48,9 @@ public class PlayingCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     public void OnBeginDrag(PointerEventData eventData)
     {
         mouseDragOffset = transform.position - Input.mousePosition;
+
+        // detach from current anchor
+        transform.SetParent(DeckTransform);
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -70,16 +78,12 @@ public class PlayingCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         CardAnchor anchorToDropOn = ClosestHoveredAnchor();
         if (anchorToDropOn != null && anchorToDropOn.CanAttachCard(this))
         {
-            // detach from current anchor
-            if (currentAnchor != null)
-            {
-                currentAnchor.OnDetachCard(this);
-            }
-
-            // attach to new achor
-            anchorToDropOn.OnAttachCard(this);
-            currentAnchor = anchorToDropOn;
+            AttachToAnchor(anchorToDropOn);
+        } else
+        {
+            AttachToAnchor(currentAnchor);
         }
+        MoveToAnchor();
 
         // unhover all anchors
         foreach (CardAnchor anchor in hoveredAnchors)
@@ -87,9 +91,17 @@ public class PlayingCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
             anchor.OnCardDragUnhover();
         }
         hoveredAnchors.Clear();
+    }
 
-        // move to the anchor point
-        transform.position = currentAnchor.transform.position;
+    public void AttachToAnchor(CardAnchor anchor)
+    {
+        anchor.OnAttachCard(this);
+        currentAnchor = anchor;
+    }
+
+    public void MoveToAnchor()
+    {
+        transform.position = currentAnchor.GetAttachmentPosition();
     }
 
     private void OnTriggerEnter2D(Collider2D collider)

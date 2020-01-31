@@ -1,28 +1,65 @@
-﻿
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.Assertions;
+using UnityEngine.UI;
 
+[RequireComponent(typeof(Image))]
 public abstract class CardAnchor : MonoBehaviour
 {
-    protected List<PlayingCard> HeldCards = new List<PlayingCard>();
+    [SerializeField] protected Color HoverColor = Color.blue;
 
-    public abstract void OnCardDragHover();
+    //protected List<PlayingCard> HeldCards = new List<PlayingCard>();
+    protected Transform HeldCardsTransform;
 
-    public abstract void OnCardDragUnhover();
+    protected Color UnhoverColor;
+    protected Image image;
+
+    private void Start()
+    {
+        OnStart();
+    }
+
+    public virtual void OnStart()
+    {
+        image = GetComponent<Image>();
+        UnhoverColor = image.color;
+
+        HeldCardsTransform = transform.Find("HeldCards");
+        Assert.IsNotNull(HeldCardsTransform);
+    }
+
+    public virtual void OnCardDragHover()
+    {
+        image.color = HoverColor;
+    }
+
+    public virtual void OnCardDragUnhover()
+    {
+        image.color = UnhoverColor;
+    }
 
     public abstract bool CanAttachCard(PlayingCard card);
 
     public virtual void OnAttachCard(PlayingCard card)
     {
-        HeldCards.Add(card);
+        card.transform.SetParent(HeldCardsTransform);
+        card.transform.SetAsLastSibling();
     }
 
-    public virtual void OnDetachCard(PlayingCard card)
+    protected int NumberOfHeldCards => HeldCardsTransform.childCount;
+    protected PlayingCard TopCard
     {
-        if (HeldCards.Contains(card) == false)
+        get
         {
-            throw new System.InvalidOperationException("Cannot detach card " + card.name + " because it is not attached");
+            if (NumberOfHeldCards < 1)
+            {
+                return null;
+            }
+            return HeldCardsTransform.GetChild(HeldCardsTransform.childCount - 1).GetComponent<PlayingCard>();
         }
-        HeldCards.Remove(card);
+    }
+
+    public virtual Vector3 GetAttachmentPosition()
+    {
+        return transform.position;
     }
 }
