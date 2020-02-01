@@ -12,6 +12,7 @@ Built for a technical assessment. Code, prefabs, scenes and sounds were built by
 ## Dev setup
 * Clone the repo
 * Open the project in Unity
+* The UI layout is built for <b>16:9 or 16:10</b> aspect ratio, please play the game in one of these aspect ratios.
 
 ## Compatibility
 Built with Unity 2018.4.13f1
