@@ -8,6 +8,9 @@ using System.Collections;
 public class CardDeck : MonoBehaviour
 {
     [SerializeField] private GameObject CardPrefab = default;
+    [SerializeField] private AudioClip DealSound = default;
+
+    private AudioSource audioSource;
 
     private CardAnchor[] ColumnAnchors;
     private System.Random Random;
@@ -16,6 +19,9 @@ public class CardDeck : MonoBehaviour
 
     private void Start()
     {
+        audioSource = GetComponent<AudioSource>();
+        Assert.IsNotNull(audioSource);
+
         Assert.IsNotNull(CardPrefab);
 
         ColumnAnchors = FindObjectsOfType<ColumnAnchor>()
@@ -66,6 +72,9 @@ public class CardDeck : MonoBehaviour
     {
         yield return new WaitForSeconds(0.5f);
         int columnIndex = 0;
+        audioSource.loop = true;
+        audioSource.clip = DealSound;
+        audioSource.Play();
         foreach (PlayingCard card in Cards)
         {
             card.AttachToAnchor(ColumnAnchors[columnIndex]);
@@ -73,6 +82,7 @@ public class CardDeck : MonoBehaviour
             columnIndex = (columnIndex + 1) % ColumnAnchors.Length;
             yield return new WaitForSeconds(0.02f);
         }
+        audioSource.Stop();
     }
 
 }

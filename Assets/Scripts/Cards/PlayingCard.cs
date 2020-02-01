@@ -3,11 +3,21 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Collections.Generic;
 using System.Collections;
+using UnityEngine.Assertions;
 
 public class PlayingCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerClickHandler
 {
+    [Header("Animation")]
     [SerializeField] private float MoveAnimationTime = 0.2f;
     [SerializeField] private AnimationCurve MoveCurve = AnimationCurve.EaseInOut(0f, 0f, 1f, 1f);
+
+    [Header("Sound")]
+    [SerializeField] private AudioClip PickupClip = default;
+    [SerializeField] private AudioClip DropClip = default;
+    [SerializeField] private AudioClip PlaceClip = default;
+    [SerializeField] private AudioClip SlideClip = default;
+
+    private AudioSource audioSource;
 
     public CardRank Rank { get; private set; }
     public CardSuit Suit { get; private set; }
@@ -34,6 +44,12 @@ public class PlayingCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         }
     }
     private bool CanBeClicked => transform.GetSiblingIndex() == transform.parent.childCount - 1;
+
+    private void Start()
+    {
+        audioSource = GetComponent<AudioSource>();
+        Assert.IsNotNull(audioSource);
+    }
 
     public void InitializeCard(CardRank Rank, CardSuit Suit, Transform DeckTransform)
     {
@@ -77,6 +93,8 @@ public class PlayingCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 
         // detach from current anchor
         transform.SetParent(DeckTransform);
+
+        audioSource.PlayOneShot(PickupClip);
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -121,9 +139,12 @@ public class PlayingCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         if (anchorToDropOn != null && anchorToDropOn.CanAttachCard(this))
         {
             AttachToAnchor(anchorToDropOn);
-        } else
+            audioSource.PlayOneShot(PlaceClip);
+        }
+        else
         {
             AttachToAnchor(currentAnchor);
+            audioSource.PlayOneShot(DropClip);
         }
         MoveToAnchor();
 
@@ -158,6 +179,7 @@ public class PlayingCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
             {
                 AttachToAnchor(freecell);
                 MoveToAnchor();
+                audioSource.PlayOneShot(SlideClip);
                 return;
             }
         }

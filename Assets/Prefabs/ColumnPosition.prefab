@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HoverColor: {r: 0, g: 0, b: 1, a: 1}
-  CardStackingOffset: 0.05
+  CardStackingOffset: 0.06
 --- !u!1001 &3328254062555101303
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -131,11 +131,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 5162122198301654116, guid: d7e473160259a48a0979e4fca581eb17,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5962132831336085885, guid: d7e473160259a48a0979e4fca581eb17,
         type: 3}
       propertyPath: m_Offset.y
@@ -145,6 +140,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Size.y
       value: 530.49866
+      objectReference: {fileID: 0}
+    - target: {fileID: 5162122198301654116, guid: d7e473160259a48a0979e4fca581eb17,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 121584114212649868, guid: d7e473160259a48a0979e4fca581eb17, type: 3}
