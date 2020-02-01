@@ -21,7 +21,10 @@ public class CardDeck : MonoBehaviour
             .OrderBy(col => col.transform.GetSiblingIndex())
             .ToArray();
         Assert.IsTrue(ColumnAnchors.Length > 0);
+    }
 
+    public void StartGame()
+    {
         GenerateDeck();
         ShuffleDeck();
         StartCoroutine(Deal());

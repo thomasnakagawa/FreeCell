@@ -1,16 +1,28 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField] private GameObject EndingScreen = default;
+
     private FoundationAnchor[] FoundationAnchors;
+    private CardDeck Deck;
 
     private void Start()
     {
         FoundationAnchors = FindObjectsOfType<FoundationAnchor>();
         Assert.AreEqual(FoundationAnchors.Length, 4, "GameManager requires 4 FoundationAnchors in the scene");
+
+        Deck = FindObjectOfType<CardDeck>();
+        Assert.IsNotNull(Deck, "GameManager needs CardDeck to be in the scene");
+
+        Assert.IsNotNull(EndingScreen, "GameManager needs reference to EndingScreen");
+    }
+
+    public void StartGame()
+    {
+        Deck.StartGame();
     }
 
     private void Update()
@@ -43,12 +55,21 @@ public class GameManager : MonoBehaviour
 
     private void OnGameCompleted()
     {
+        StartCoroutine(EndOfGameSequence());
+    }
+
+    private IEnumerator EndOfGameSequence()
+    {
         foreach (var card in FindObjectsOfType<PlayingCard>())
         {
             var rb = card.GetComponent<Rigidbody2D>();
-            card.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
-            rb.AddForce(Random.onUnitSphere * 10f);
-            rb.gravityScale = 10f;
+            rb.bodyType = RigidbodyType2D.Dynamic;
+            rb.mass = 1f;
+            rb.AddForce(Random.onUnitSphere * 10000f);
+            rb.AddTorque(Random.Range(-5000f, 5000f));
+            rb.gravityScale = 50f;
         }
+        yield return new WaitForSeconds(4f);
+        EndingScreen.SetActive(true);
     }
 }
