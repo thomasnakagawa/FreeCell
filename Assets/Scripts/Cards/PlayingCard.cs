@@ -78,7 +78,7 @@ public class PlayingCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         {
             if (anchor == closestHoveredAnchor)
             {
-                anchor.OnCardDragHover();
+                anchor.OnCardDragHover(this);
             }
             else
             {
