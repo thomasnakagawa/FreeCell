@@ -13,6 +13,9 @@ Built for a technical assessment. Code, prefabs, scenes and sounds were built by
 * Clone the repo
 * Open the project in Unity
 
+## Compatibility
+Built with Unity 2018.4.13f1
+
 ## Configuration
 The game can be configured from the file `Assets/Configuration/config.json`. Available variables are:
 * EnabledHoverColor: Hex color.The color a card highlights when dragging a card that can be placed on top of it
@@ -20,5 +23,5 @@ The game can be configured from the file `Assets/Configuration/config.json`. Ava
 * CheatsEnabled: true/false. When true, pressing the 'A' key triggers the end of the game. Also when true, you can pick up card from anywhere in the columns.
 * RNGSeed: integer. The seed for the random number generator for shuffling the cards.
 
-## Compatibility
-Built with Unity 2018.4.13f1
+## Code overview
+The programming of the game centers around the idea that PlayingCard objects are always attached to some anchor object. Anchors are things on screen where a card can be placed (in a column, foundation space, or free cell). The class CardAnchor.cs contains the main anchor behavior, and then the decendent classes implement specific behavior for the foundation, column and freecell spaces.
