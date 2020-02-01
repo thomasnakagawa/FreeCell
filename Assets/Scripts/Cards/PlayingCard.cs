@@ -2,9 +2,13 @@
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Collections.Generic;
+using System.Collections;
 
 public class PlayingCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerClickHandler
 {
+    [SerializeField] private float MoveAnimationTime = 0.2f;
+    [SerializeField] private AnimationCurve MoveCurve = AnimationCurve.EaseInOut(0f, 0f, 1f, 1f);
+
     public CardRank Rank { get; private set; }
     public CardSuit Suit { get; private set; }
 
@@ -167,7 +171,22 @@ public class PlayingCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 
     public void MoveToAnchor()
     {
-        transform.position = currentAnchor.GetAttachmentPosition(this);
+        StopAllCoroutines();
+        StartCoroutine(MoveToLocation(currentAnchor.GetAttachmentPosition(this)));
+    }
+
+    private IEnumerator MoveToLocation(Vector3 target)
+    {
+        Vector3 startingPosition = transform.position;
+        float elapsedTime = 0f;
+        while (elapsedTime < MoveAnimationTime)
+        {
+            float curvedNormalizedT = MoveCurve.Evaluate(elapsedTime / MoveAnimationTime);
+            transform.position = Vector3.Lerp(startingPosition, target, curvedNormalizedT);
+            yield return null;
+            elapsedTime += Time.deltaTime;
+        }
+        transform.position = target;
     }
 
     private void OnTriggerEnter2D(Collider2D collider)
