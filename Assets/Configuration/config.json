@@ -1,6 +1,6 @@
 ﻿{
     "HoverEnabledColor": "#2BF797",
     "HoverDisabledColor": "#57A8B2",
-    "CheatsEnabled": false,
+    "CheatsEnabled": true,
     "RNGSeed": 3
 }

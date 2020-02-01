@@ -5,6 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Collections;
 
+/// <summary>
+/// Handles spawning, shuffling and dealing cards
+/// </summary>
 public class CardDeck : MonoBehaviour
 {
     [SerializeField] private GameObject CardPrefab = default;
@@ -96,6 +99,8 @@ public class CardDeck : MonoBehaviour
             yield return new WaitForSeconds(0.02f);
         }
         audioSource.Stop();
+
+        FindObjectOfType<Timer>().RestartTimer();
     }
 
 }

@@ -60,6 +60,8 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator EndOfGameSequence()
     {
+        FindObjectOfType<Timer>().StopTimer();
+
         foreach (var card in FindObjectsOfType<PlayingCard>())
         {
             var rb = card.GetComponent<Rigidbody2D>();
