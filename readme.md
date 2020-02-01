@@ -2,7 +2,7 @@
 Solitare game make in Unity, based on the game from Microsoft Windows 
 https://en.wikipedia.org/wiki/FreeCell
 
-![Screenshot](Images/screenshot.PNG)
+![Screenshot](Images/screenshot.png)
 
 ## About
 Built for a technical assessment. Code, prefabs, scenes and sounds were built by me within 24 hours, except:
