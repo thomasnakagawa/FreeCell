@@ -28,12 +28,22 @@ public abstract class CardAnchor : MonoBehaviour
 
     public void OnCardDragHover(PlayingCard card)
     {
+        Color hoverColor;
+        if (CanAttachCard(card))
+        {
+            hoverColor = GameConfiguration.Instance.HoverEnabledColor;
+        }
+        else
+        {
+            hoverColor = GameConfiguration.Instance.HoverDisabledColor;
+        }
+
         Image imageToColor = image;
         if (NumberOfHeldCards > 0)
         {
             imageToColor = TopCard.GetComponent<Image>();
         }
-        imageToColor.color = CanAttachCard(card) ? HoverColor : Color.red;
+        imageToColor.color = hoverColor;
     }
 
     public void OnCardDragUnhover()

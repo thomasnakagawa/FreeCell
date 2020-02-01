@@ -16,7 +16,19 @@ public class PlayingCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     private bool DidDrag = false;
     private List<CardAnchor> hoveredAnchors;
 
-    private bool CanBeDragged => transform.GetSiblingIndex() == transform.parent.childCount - 1;
+    private bool CanBeDragged {
+        get
+        {
+            if (GameConfiguration.Instance.CheatsEnabled)
+            {
+                return true;
+            }
+            else
+            {
+                return transform.GetSiblingIndex() == transform.parent.childCount - 1;
+            }
+        }
+    }
     private bool CanBeClicked => transform.GetSiblingIndex() == transform.parent.childCount - 1;
 
     public void InitializeCard(CardRank Rank, CardSuit Suit, Transform DeckTransform)

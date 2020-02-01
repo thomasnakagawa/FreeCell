@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.A))
+        if (GameConfiguration.Instance.CheatsEnabled && Input.GetKeyDown(KeyCode.A))
         {
             OnGameCompleted();
         }
