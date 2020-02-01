@@ -10,6 +10,7 @@ public class CardDeck : MonoBehaviour
     [SerializeField] private GameObject CardPrefab = default;
 
     private CardAnchor[] ColumnAnchors;
+    private System.Random Random;
 
     List<PlayingCard> Cards;
 
@@ -25,6 +26,7 @@ public class CardDeck : MonoBehaviour
 
     public void StartGame()
     {
+        Random = new System.Random(GameConfiguration.Instance.RNGSeed);
         GenerateDeck();
         ShuffleDeck();
         StartCoroutine(Deal());
@@ -46,14 +48,14 @@ public class CardDeck : MonoBehaviour
         Assert.AreEqual(Cards.Count, 52);
     }
 
+    // https://stackoverflow.com/questions/273313/randomize-a-listt
     private void ShuffleDeck()
     {
-        System.Random random = new System.Random();
         int n = Cards.Count;
         while (n > 1)
         {
             n--;
-            int k = random.Next(n + 1);
+            int k = Random.Next(n + 1);
             PlayingCard value = Cards[k];
             Cards[k] = Cards[n];
             Cards[n] = value;
