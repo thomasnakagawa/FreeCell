@@ -22,6 +22,7 @@ The game can be configured from the file `Assets/Configuration/config.json`. Ava
 * DisabledHoverColor: Hex color. The color a card highlights wheb dragging a card that cannot be place on top of it
 * CheatsEnabled: true/false. When true, pressing the 'A' key triggers the end of the game. Also when true, you can pick up card from anywhere in the columns.
 * RNGSeed: integer. The seed for the random number generator for shuffling the cards.
+* OutputFile: file. Relative file path for where to store the results when the game is won.
 
 ## Code overview
 The programming of the game centers around the idea that PlayingCard objects are always attached to some anchor object. Anchors are things on screen where a card can be placed (in a column, foundation space, or free cell). The class CardAnchor.cs contains the main anchor behavior, and then the decendent classes implement specific behavior for the foundation, column and freecell spaces. The `Assets/Scripts/Cards` and `Assets/Scripts/Anchors` folder contain the code for the main interactive gameplay.
