@@ -8,8 +8,6 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Image))]
 public abstract class CardAnchor : MonoBehaviour
 {
-    [SerializeField] protected Color HoverColor = Color.blue;
-
     protected Transform HeldCardsTransform;
 
     protected Color UnhoverColor;
