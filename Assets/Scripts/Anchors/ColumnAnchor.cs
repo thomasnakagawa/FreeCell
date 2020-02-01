@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class ColumnAnchor : CardAnchor
 {
+    [Tooltip("Vertical distance between two stacked cards. Measured as percent of screen height")]
     [SerializeField] private float CardStackingOffset = 0.05f;
 
     private float UnitOffset => (CardStackingOffset * Screen.height);

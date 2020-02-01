@@ -25,4 +25,10 @@ public class FoundationAnchor : CardAnchor
             return matchesSuit && isOneRankHigherThanTopCard;
         }
     }
+
+    public override void OnAttachCard(PlayingCard card)
+    {
+        base.OnAttachCard(card);
+        // TODO: call into game manager to check if game is complete
+    }
 }

@@ -36,7 +36,7 @@ public class CardDeck : MonoBehaviour
             {
                 GameObject cardGO = Instantiate(CardPrefab, transform);
                 PlayingCard card = cardGO.GetComponent<PlayingCard>();
-                card.InitializeCardValue(rank, suit, transform);
+                card.InitializeCard(rank, suit, transform);
                 Cards.Add(card);
             }
         }

@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Collections.Generic;
 
-public class PlayingCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+public class PlayingCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerClickHandler
 {
     public CardRank Rank { get; private set; }
     public CardSuit Suit { get; private set; }
@@ -13,11 +13,13 @@ public class PlayingCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     private Transform DeckTransform;
 
     private Vector3 mouseDragOffset;
+    private bool DidDrag = false;
     private List<CardAnchor> hoveredAnchors;
 
     private bool CanBeDragged => transform.GetSiblingIndex() == transform.parent.childCount - 1;
+    private bool CanBeClicked => transform.GetSiblingIndex() == transform.parent.childCount - 1;
 
-    public void InitializeCardValue(CardRank Rank, CardSuit Suit, Transform DeckTransform)
+    public void InitializeCard(CardRank Rank, CardSuit Suit, Transform DeckTransform)
     {
         this.Rank = Rank;
         this.Suit = Suit;
@@ -55,6 +57,7 @@ public class PlayingCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         }
 
         mouseDragOffset = transform.position - Input.mousePosition;
+        DidDrag = true;
 
         // detach from current anchor
         transform.SetParent(DeckTransform);
@@ -109,6 +112,39 @@ public class PlayingCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         MoveToAnchor();
 
         hoveredAnchors.Clear();
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (!CanBeClicked)
+        {
+            return;
+        }
+
+        // don't perform this click event if the card was just dragged
+        if (DidDrag)
+        {
+            DidDrag = false;
+            return;
+        }
+
+        // don't go to freecell if already at a freecell
+        if (currentAnchor is FreecellAnchor)
+        {
+            return;
+        }
+
+        // attach to a freecell if one is open
+        FreecellAnchor[] freecells = FindObjectsOfType<FreecellAnchor>();
+        foreach (FreecellAnchor freecell in freecells)
+        {
+            if (freecell.CanAttachCard(this))
+            {
+                AttachToAnchor(freecell);
+                MoveToAnchor();
+                return;
+            }
+        }
     }
 
     public void AttachToAnchor(CardAnchor anchor)
