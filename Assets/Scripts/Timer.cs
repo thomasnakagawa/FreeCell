@@ -2,6 +2,9 @@
 using UnityEngine.Assertions;
 using UnityEngine.UI;
 
+/// <summary>
+/// Behavior for the timer to show the game time
+/// </summary>
 public class Timer : MonoBehaviour
 {
     private Text text;

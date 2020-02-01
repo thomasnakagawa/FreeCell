@@ -5,6 +5,9 @@ using System.Collections.Generic;
 using System.Collections;
 using UnityEngine.Assertions;
 
+/// <summary>
+/// Handles behavior of a playing card in the game
+/// </summary>
 public class PlayingCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerClickHandler
 {
     [Header("Animation")]

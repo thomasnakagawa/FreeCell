@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using SimpleJSON;
 
+/// <summary>
+/// Provides config variables for other classes to access
+/// </summary>
 public class GameConfiguration : MonoBehaviour
 {
     [SerializeField] private TextAsset JSONConfig = default;

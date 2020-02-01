@@ -2,6 +2,9 @@
 using UnityEngine.Assertions;
 using UnityEngine.UI;
 
+/// <summary>
+/// Behavior for the foundation card positions
+/// </summary>
 public class FoundationAnchor : CardAnchor
 {
     [SerializeField] private CardSuit Suit = CardSuit.CLUB;

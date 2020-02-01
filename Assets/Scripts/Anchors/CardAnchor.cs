@@ -2,6 +2,9 @@
 using UnityEngine.Assertions;
 using UnityEngine.UI;
 
+/// <summary>
+/// Base class for positions on screen where cards can be placed
+/// </summary>
 [RequireComponent(typeof(Image))]
 public abstract class CardAnchor : MonoBehaviour
 {

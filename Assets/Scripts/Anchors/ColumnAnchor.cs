@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// Behavior for card column. Cascades attached cards
+/// </summary>
 public class ColumnAnchor : CardAnchor
 {
     [Tooltip("Vertical distance between two stacked cards. Measured as percent of screen height")]

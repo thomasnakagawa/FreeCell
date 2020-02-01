@@ -2,6 +2,9 @@
 using UnityEngine;
 using UnityEngine.Assertions;
 
+/// <summary>
+/// Handles starting the game, detecting the game being won, and ending the game
+/// </summary>
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private GameObject EndingScreen = default;
