@@ -3,9 +3,9 @@ Solitare game make in Unity, based on the game from Microsoft Windows
 https://en.wikipedia.org/wiki/FreeCell
 
 ## About
-Built for a technical assessment. Code, prefabs and scenes were built by me within 24 hours, except:
-* Box sprites, fonts and the button UI element from my own asset store package https://assetstore.unity.com/packages/2d/gui/90-s-desktop-os-ui-159547
-* SimpleJSON https://github.com/Bunny83/SimpleJSON
+Built for a technical assessment. Code, prefabs, scenes and sounds were built by me within 24 hours, except:
+* Box sprites, fonts and the button UI element from my own asset store package https://assetstore.unity.com/packages/2d/gui/90-s-desktop-os-ui-159547, in  `Assets/Desktop90_UI`
+* SimpleJSON https://github.com/Bunny83/SimpleJSON, in `Assets/SimpleJSON`
 
 ## Dev setup
 * Clone the repo

@@ -19,6 +19,8 @@ public class CardDeck : MonoBehaviour
 
     private void Start()
     {
+        Random = new System.Random(GameConfiguration.Instance.RNGSeed);
+
         audioSource = GetComponent<AudioSource>();
         Assert.IsNotNull(audioSource);
 
@@ -32,7 +34,18 @@ public class CardDeck : MonoBehaviour
 
     public void StartGame()
     {
-        Random = new System.Random(GameConfiguration.Instance.RNGSeed);
+        // stop previous deal if it's still happening
+        audioSource.Stop();
+        StopAllCoroutines();
+
+        // destroy cards from previous game, if there are any
+        var oldCards = FindObjectsOfType<PlayingCard>();
+        foreach (PlayingCard card in oldCards)
+        {
+            Destroy(card.gameObject);
+        }
+
+        // create a new deck and deal
         GenerateDeck();
         ShuffleDeck();
         StartCoroutine(Deal());
