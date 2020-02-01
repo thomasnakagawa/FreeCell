@@ -10,7 +10,7 @@ public class Timer : MonoBehaviour
     private Text text;
 
     private bool timerIsOn = false;
-    private float timeAccumulator = 0f;
+    public float timeAccumulator { get; private set; } = 0f;
 
     void Start()
     {

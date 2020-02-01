@@ -63,7 +63,9 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator EndOfGameSequence()
     {
-        FindObjectOfType<Timer>().StopTimer();
+        Timer timer = FindObjectOfType<Timer>();
+        timer.StopTimer();
+        ResultsExporter.WriteResultsToFile(timer.timeAccumulator, GameConfiguration.Instance.CheatsEnabled);
 
         foreach (var card in FindObjectsOfType<PlayingCard>())
         {

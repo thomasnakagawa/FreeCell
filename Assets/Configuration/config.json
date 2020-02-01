@@ -1,6 +1,7 @@
 ﻿{
     "HoverEnabledColor": "#2BF797",
     "HoverDisabledColor": "#57A8B2",
-    "CheatsEnabled": true,
-    "RNGSeed": 3
+    "CheatsEnabled": false,
+    "RNGSeed": 3,
+    "OutputFile":  "results/myresult.json"
 }

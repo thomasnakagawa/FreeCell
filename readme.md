@@ -24,4 +24,6 @@ The game can be configured from the file `Assets/Configuration/config.json`. Ava
 * RNGSeed: integer. The seed for the random number generator for shuffling the cards.
 
 ## Code overview
-The programming of the game centers around the idea that PlayingCard objects are always attached to some anchor object. Anchors are things on screen where a card can be placed (in a column, foundation space, or free cell). The class CardAnchor.cs contains the main anchor behavior, and then the decendent classes implement specific behavior for the foundation, column and freecell spaces.
+The programming of the game centers around the idea that PlayingCard objects are always attached to some anchor object. Anchors are things on screen where a card can be placed (in a column, foundation space, or free cell). The class CardAnchor.cs contains the main anchor behavior, and then the decendent classes implement specific behavior for the foundation, column and freecell spaces. The `Assets/Scripts/Cards` and `Assets/Scripts/Anchors` folder contain the code for the main interactive gameplay.
+
+The `Assets/Scripts/GameManagement` folder contains scripts that do other functionality around the game. GameConfiguration reads in a JSON file to provide config variables for other classes. ResultsExporter writes a JSON file with the player's results when the game is completed.
