@@ -33,26 +33,6 @@ public class ColumnAnchor : CardAnchor
             childCard.GetComponent<PlayingCard>().MoveToAnchor();
         }
     }
-
-    public override void OnCardDragHover()
-    {
-        Image imageToColor = GetComponent<Image>();
-        if (NumberOfHeldCards > 0)
-        {
-            imageToColor = TopCard.GetComponent<Image>();
-        }
-        imageToColor.color = HoverColor;
-    }
-
-    public override void OnCardDragUnhover()
-    {
-        Image imageToColor = GetComponent<Image>();
-        if (NumberOfHeldCards > 0)
-        {
-            imageToColor = TopCard.GetComponent<Image>();
-        }
-        imageToColor.color = Color.white;
-    }
     
     public override Vector3 GetAttachmentPosition(PlayingCard card)
     {

@@ -26,14 +26,24 @@ public abstract class CardAnchor : MonoBehaviour
         Assert.IsNotNull(HeldCardsTransform);
     }
 
-    public virtual void OnCardDragHover()
+    public void OnCardDragHover()
     {
-        image.color = HoverColor;
+        Image imageToColor = image;
+        if (NumberOfHeldCards > 0)
+        {
+            imageToColor = TopCard.GetComponent<Image>();
+        }
+        imageToColor.color = HoverColor;
     }
 
-    public virtual void OnCardDragUnhover()
+    public void OnCardDragUnhover()
     {
-        image.color = UnhoverColor;
+        Image imageToColor = image;
+        if (NumberOfHeldCards > 0)
+        {
+            imageToColor = TopCard.GetComponent<Image>();
+        }
+        imageToColor.color = Color.white;
     }
 
     public abstract bool CanAttachCard(PlayingCard card);

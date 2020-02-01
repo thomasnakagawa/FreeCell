@@ -1,14 +1,20 @@
 ﻿using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.UI;
 
 public class FoundationAnchor : CardAnchor
 {
     [SerializeField] private CardSuit Suit = CardSuit.CLUB;
 
+    private GameManager gameManager;
+
     public override void OnStart()
     {
         base.OnStart();
         GetComponentInChildren<Text>().text = Suit.ToString();
+
+        gameManager = FindObjectOfType<GameManager>();
+        Assert.IsNotNull(gameManager, "FoundationAnchor requires a GameManager in the scene");
     }
 
     public override bool CanAttachCard(PlayingCard card)
@@ -29,6 +35,8 @@ public class FoundationAnchor : CardAnchor
     public override void OnAttachCard(PlayingCard card)
     {
         base.OnAttachCard(card);
-        // TODO: call into game manager to check if game is complete
+        gameManager.OnFoundationChanged();
     }
+
+    public bool IsComplete => NumberOfHeldCards == 13;
 }
