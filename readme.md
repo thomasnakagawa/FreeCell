@@ -9,6 +9,27 @@ Built for a technical assessment. Code, prefabs, scenes and sounds were built by
 * Box sprites, fonts and the button UI element from my own asset store package https://assetstore.unity.com/packages/2d/gui/90-s-desktop-os-ui-159547, in  `Assets/Desktop90_UI`
 * SimpleJSON https://github.com/Bunny83/SimpleJSON, in `Assets/SimpleJSON`
 
+## Functionality
+### Required functionality
+- [x] Implement rules of the game
+- [x] Three screens. Intro, gameplay and ending
+- [x] Random deal (seed for randomness is in `Assets/Configuration/config.json`)
+- [x] Click open card to send to free cell
+- [x] Drag and drop single cards
+- [x] Cannot move cards to illegal positions
+- [x] JSON I/O. The file `Assets/Configuration/config.json` is used to configure different variables (see Configuration section below). A results.json file is output when the player completes the game
+
+### Extra functionality
+- [x] Different highlight colors when dragging a card over a valid or invalid position
+- [x] Deal animation
+- [x] Card moving animation
+- [x] End of game card visual
+- [x] Sounds
+- [x] Timer
+- [x] Redeal button
+- [x] 'Cheats' mode for debugging. Enable from config file to be able to drag any card
+- [ ] Drag multiple cards (Didn't get to this but it would be nice to have)
+
 ## Dev setup
 * Clone the repo
 * Open the project in Unity
